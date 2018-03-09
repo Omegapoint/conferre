@@ -12,6 +12,8 @@ public class EventBus {
     public EventBus() {
         topics.put("registration", new EventTopic());
         topics.put("registration_external", new EventTopic());
+        topics.put("conference", new EventTopic());
+        topics.put("conference_external", new EventTopic());
     }
 
     public void publish(String topicName, Event event) {
