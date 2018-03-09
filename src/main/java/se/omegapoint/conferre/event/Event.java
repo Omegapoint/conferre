@@ -1,5 +1,7 @@
 package se.omegapoint.conferre.event;
 
+import se.omegapoint.conferre.Identity;
+
 import java.time.LocalDateTime;
 
 public final class Event {

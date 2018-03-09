@@ -1,4 +1,4 @@
-package se.omegapoint.conferre.registration.domain;
+package se.omegapoint.conferre.proposal.domain;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -12,13 +12,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Repository
-public class ConferenceRegistrationRepository implements EventListener {
+public class ConferenceProposalRepository implements EventListener {
     private EventBus eventBus;
 
     private Set<Identity> currentState = new HashSet<>();
 
     @Autowired
-    public ConferenceRegistrationRepository(EventBus eventBus) {
+    public ConferenceProposalRepository(EventBus eventBus) {
         this.eventBus = eventBus;
         createCurrentState();
         eventBus.registerListener(this);
