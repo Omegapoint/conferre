@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 import se.omegapoint.conferre.Identity;
 import se.omegapoint.conferre.event.Event;
 import se.omegapoint.conferre.event.EventBus;
-import se.omegapoint.conferre.event.EventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class ConferenceRepository implements EventListener {
+public class ConferenceRepository {
 
     private EventBus eventBus;
 
@@ -23,7 +22,6 @@ public class ConferenceRepository implements EventListener {
     public ConferenceRepository(EventBus eventBus) {
         this.eventBus = eventBus;
         createCurrentState();
-        eventBus.registerListener(this);
     }
 
     public List<Conference> listConferences() {
@@ -31,24 +29,22 @@ public class ConferenceRepository implements EventListener {
     }
 
     private void createCurrentState() {
-        eventBus.list("conference").forEach(this::onNext);
+        eventBus.list("conference").forEach(this::applyEvent);
     }
 
-    public void onNext(Event event) {
-        if (validate(event)) {
-            eventBus.publish("conference_external", event);
-            Conference conference = (Conference) event.getData();
-            currentState.put(conference.getId(), conference);
-        }
+    private void applyEvent(Event event) {
+        Conference conference = (Conference) event.getData();
+        currentState.put(conference.getId(), conference);
     }
 
-    @Override
-    public String getTopicName() {
-        return "conference";
+    private void validate(Conference conference) {
+        currentState.values().forEach(conference::requireGood);
     }
 
-    private boolean validate(Event e) {
-        Conference conference = ((Conference) e.getData());
-        return currentState.values().stream().noneMatch(conference::conflictsWith);
+    public void createConference(Conference conference) {
+        validate(conference);
+        Event event = conference.asCreatedEvent();
+        eventBus.publish("conference", event);
+        applyEvent(event);
     }
 }

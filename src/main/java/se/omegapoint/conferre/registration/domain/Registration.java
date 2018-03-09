@@ -4,9 +4,6 @@ import org.springframework.lang.NonNull;
 import se.omegapoint.conferre.Entity;
 import se.omegapoint.conferre.Identity;
 import se.omegapoint.conferre.event.Event;
-import se.omegapoint.conferre.event.EventType;
-
-import java.time.LocalDateTime;
 
 import static se.omegapoint.conferre.event.EventType.CREATED;
 
@@ -34,7 +31,9 @@ public class Registration extends Entity {
         return new Event(CREATED, this);
     }
 
-    public boolean conflictsWith(Registration existing) {
-        return eMail.equals(existing.eMail) && conferenceId.equals(existing.conferenceId);
+    public void requireGood(Registration existing) {
+        if (eMail.equals(existing.eMail) && conferenceId.equals(existing.conferenceId)) {
+            throw new IllegalStateException("Duplicate registration, eMail: " + existing.eMail + ", conferenceId: " + existing.conferenceId);
+        }
     }
 }

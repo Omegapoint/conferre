@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import se.omegapoint.conferre.conference.domain.Conference;
 import se.omegapoint.conferre.conference.domain.ConferenceRepository;
-import se.omegapoint.conferre.event.EventBus;
 
 import java.util.List;
 
@@ -14,16 +13,12 @@ import java.util.List;
 @RequestMapping("/conference")
 public class ConferenceController {
 
-
-    @Autowired
-    private EventBus eventBus;
-
     @Autowired
     private ConferenceRepository conferenceRepository;
 
     @RequestMapping(method = RequestMethod.POST)
     public Conference createConference(Conference conference) {
-        eventBus.publish("conference", conference.asCreatedEvent());
+        conferenceRepository.createConference(conference);
         return conference;
     }
 

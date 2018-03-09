@@ -3,7 +3,6 @@ package se.omegapoint.conferre.conference.domain;
 import se.omegapoint.conferre.Entity;
 import se.omegapoint.conferre.Identity;
 import se.omegapoint.conferre.event.Event;
-import se.omegapoint.conferre.registration.domain.Registration;
 
 import static se.omegapoint.conferre.event.EventType.CREATED;
 
@@ -24,7 +23,9 @@ public class Conference extends Entity {
         return new Event(CREATED, this);
     }
 
-    public boolean conflictsWith(Conference existing) {
-        return name.equals(existing.name);
+    public void requireGood(Conference existing) {
+        if (name.equals(existing.name)) {
+            throw new IllegalStateException("Conflicting conference: " + name);
+        }
     }
 }
