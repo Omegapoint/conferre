@@ -9,6 +9,8 @@ public class Identity extends ValueObject {
 
     private final UUID uuid;
 
+
+
     private Identity(@NonNull UUID uuid) {
         Objects.requireNonNull(uuid, "Identity uuid can't be null");
 
@@ -21,6 +23,10 @@ public class Identity extends ValueObject {
 
     public static Identity of(UUID uuid) {
         return new Identity(uuid);
+    }
+
+    public static Identity instance() {
+        return new Identity(UUID.randomUUID());
     }
 
     public UUID getUuid() {
