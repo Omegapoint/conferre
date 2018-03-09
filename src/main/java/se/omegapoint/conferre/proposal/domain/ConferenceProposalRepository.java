@@ -29,6 +29,7 @@ public class ConferenceProposalRepository implements EventListener {
     }
 
     public void onNext(Event event) {
+        System.out.println(event);
         applyEvent(event);
     }
 

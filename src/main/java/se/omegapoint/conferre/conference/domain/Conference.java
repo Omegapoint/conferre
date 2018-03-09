@@ -4,8 +4,6 @@ import se.omegapoint.conferre.Entity;
 import se.omegapoint.conferre.Identity;
 import se.omegapoint.conferre.event.Event;
 
-import static se.omegapoint.conferre.event.EventType.CREATED;
-
 public class Conference extends Entity {
 
     private final String name;
@@ -20,7 +18,7 @@ public class Conference extends Entity {
     }
 
     public Event asCreatedEvent() {
-        return new Event(CREATED, this);
+        return new Event("CREATED", this);
     }
 
     public void requireGood(Conference existing) {

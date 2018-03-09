@@ -1,5 +1,6 @@
 package se.omegapoint.conferre.event;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,7 +8,7 @@ import java.util.Map;
 public class EventBus {
 
     private final Map<String, EventTopic> topics = new HashMap<>();
-    private final Map<String, EventListener> topicListeners = new HashMap<>();
+    private final Map<String, List<EventListener>> topicListeners = new HashMap<>();
 
     public EventBus() {
         topics.put("registration", new EventTopic());
@@ -17,9 +18,9 @@ public class EventBus {
 
     public void publish(String topicName, Event event) {
         topics.get(topicName).publish(event);
-        EventListener eventListener = topicListeners.get(topicName);
+        List<EventListener> eventListener = topicListeners.get(topicName);
         if (eventListener != null) {
-            eventListener.onNext(event);
+            eventListener.forEach(l -> l.onNext(event));
         }
         System.out.println("topic: " + topicName + " got " + event);
     }
@@ -29,6 +30,7 @@ public class EventBus {
     }
 
     public void registerListener(EventListener eventListener) {
-        topicListeners.put(eventListener.getTopicName(), eventListener);
+        List<EventListener> listeners = topicListeners.computeIfAbsent(eventListener.getTopicName(), k -> new ArrayList<>());
+        listeners.add(eventListener);
     }
 }
