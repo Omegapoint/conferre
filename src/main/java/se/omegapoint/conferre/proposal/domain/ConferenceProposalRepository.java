@@ -36,10 +36,10 @@ public class ConferenceProposalRepository implements EventListener {
 		applyEvent(event);
 	}
 
-	private void applyEvent(Event event) {
-		Conference conference = (Conference) event.getData();
-		currentState.add(conference.getId());
-	}
+    private void applyEvent(Event event) {
+        Conference conference = (Conference) event.getPayload();
+        currentState.add(conference.getId());
+    }
 
 	public boolean exists(Identity conferenceId) {
 		return currentState.contains(conferenceId);

@@ -36,7 +36,7 @@ public class ConferenceRepository {
     }
 
     private void applyEvent(Event event) {
-        Conference conference = (Conference) event.getData();
+        Conference conference = (Conference) event.getPayload();
         currentState.put(conference.getId(), conference);
     }
 

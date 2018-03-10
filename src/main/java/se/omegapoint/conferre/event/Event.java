@@ -1,18 +1,16 @@
 package se.omegapoint.conferre.event;
 
-import se.omegapoint.conferre.Identity;
-
 import java.time.LocalDateTime;
 
 public final class Event {
 
     private String type;
-    private final Object data;
+    private final Object payload;
     private final LocalDateTime timestamp;
 
-    public Event(String type, Object data) {
+    public Event(String type, Object payload) {
         this.type = type;
-        this.data = data;
+        this.payload = payload;
         this.timestamp = LocalDateTime.now();
     }
 
@@ -20,8 +18,8 @@ public final class Event {
         return type;
     }
 
-    public Object getData() {
-        return data;
+    public Object getPayload() {
+        return payload;
     }
 
     public LocalDateTime getTimestamp() {
@@ -32,7 +30,7 @@ public final class Event {
     public String toString() {
         return "Event{" +
                 "type=" + type +
-                ", data=" + data +
+                ", payload=" + payload +
                 ", timestamp=" + timestamp +
                 '}';
     }

@@ -16,8 +16,8 @@ public class ProposalStore {
 
     private final Map<Identity, Proposal> store = new HashMap<>();
 
-    public void forEach(BiConsumer<Identity, Proposal> requireGood) {
-        store.forEach(requireGood);
+    public void forEach(BiConsumer<Identity, Proposal> mapFunction) {
+        store.forEach(mapFunction);
     }
 
     public Proposal applyEvent(Event event) {
@@ -32,13 +32,13 @@ public class ProposalStore {
     }
 
     private Proposal created(Event event) {
-        Proposal proposal = (Proposal) event.getData();
+        Proposal proposal = (Proposal) event.getPayload();
         store.put(proposal.getId(), proposal);
         return proposal;
     }
 
     private Proposal titleUpdated(Event event) {
-        ProposalTitleUpdated titleUpdated = (ProposalTitleUpdated) event.getData();
+        ProposalTitleUpdated titleUpdated = (ProposalTitleUpdated) event.getPayload();
         Proposal existing = store.get(titleUpdated.getProposalId());
         Proposal updated = Proposal.from(existing).withTitle(titleUpdated.getTitle()).build();
         store.put(updated.getId(), updated);

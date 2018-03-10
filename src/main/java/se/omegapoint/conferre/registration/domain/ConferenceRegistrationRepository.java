@@ -36,7 +36,7 @@ public class ConferenceRegistrationRepository implements EventListener {
     }
 
     private void applyEvent(Event event) {
-        Conference conference = (Conference) event.getData();
+        Conference conference = (Conference) event.getPayload();
         currentState.add(conference.getId());
     }
 
