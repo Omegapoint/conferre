@@ -5,11 +5,14 @@ import org.springframework.stereotype.Repository;
 import se.omegapoint.conferre.Identity;
 import se.omegapoint.conferre.event.Event;
 import se.omegapoint.conferre.event.EventBus;
+import se.omegapoint.conferre.event.TopicName;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static se.omegapoint.conferre.event.TopicName.CONFERENCE;
 
 @Repository
 public class ConferenceRepository {
@@ -29,7 +32,7 @@ public class ConferenceRepository {
     }
 
     private void createCurrentState() {
-        eventBus.list("conference").forEach(this::applyEvent);
+        eventBus.list(CONFERENCE).forEach(this::applyEvent);
     }
 
     private void applyEvent(Event event) {
@@ -44,7 +47,7 @@ public class ConferenceRepository {
     public void createConference(Conference conference) {
         validate(conference);
         Event event = conference.asCreatedEvent();
-        eventBus.publish("conference", event);
+        eventBus.publish(CONFERENCE, event);
         applyEvent(event);
     }
 }

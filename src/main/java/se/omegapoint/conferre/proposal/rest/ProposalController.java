@@ -26,8 +26,7 @@ public class ProposalController {
 
     @RequestMapping(method = RequestMethod.POST)
     public Proposal createProposal(Proposal proposal) {
-        proposalService.createProposal(proposal);
-        return proposal;
+        return proposalService.createProposal(proposal);
     }
 
     @RequestMapping(path = "/{proposalId}", method = RequestMethod.PUT)

@@ -7,16 +7,14 @@ import java.util.Map;
 
 public class EventBus {
 
-    private final Map<String, EventTopic> topics = new HashMap<>();
-    private final Map<String, List<EventListener>> topicListeners = new HashMap<>();
+    private final Map<TopicName, EventTopic> topics = new HashMap<>();
+    private final Map<TopicName, List<EventListener>> topicListeners = new HashMap<>();
 
     public EventBus() {
-        topics.put("registration", new EventTopic());
-        topics.put("conference", new EventTopic());
-        topics.put("proposal", new EventTopic());
+        TopicName.asList().forEach(topicName -> topics.put(topicName, new EventTopic()));
     }
 
-    public void publish(String topicName, Event event) {
+    public void publish(TopicName topicName, Event event) {
         topics.get(topicName).publish(event);
         List<EventListener> eventListener = topicListeners.get(topicName);
         if (eventListener != null) {
@@ -25,7 +23,7 @@ public class EventBus {
         System.out.println("topic: " + topicName + " got " + event);
     }
 
-    public List<Event> list(String topicName) {
+    public List<Event> list(TopicName topicName) {
         return topics.get(topicName).list();
     }
 

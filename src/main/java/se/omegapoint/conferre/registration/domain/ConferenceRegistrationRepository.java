@@ -7,9 +7,12 @@ import se.omegapoint.conferre.conference.domain.Conference;
 import se.omegapoint.conferre.event.Event;
 import se.omegapoint.conferre.event.EventBus;
 import se.omegapoint.conferre.event.EventListener;
+import se.omegapoint.conferre.event.TopicName;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import static se.omegapoint.conferre.event.TopicName.CONFERENCE;
 
 @Repository
 public class ConferenceRegistrationRepository implements EventListener {
@@ -25,7 +28,7 @@ public class ConferenceRegistrationRepository implements EventListener {
     }
 
     private void createCurrentState() {
-        eventBus.list("conference").forEach(this::applyEvent);
+        eventBus.list(CONFERENCE).forEach(this::applyEvent);
     }
 
     public void onNext(Event event) {
@@ -42,8 +45,8 @@ public class ConferenceRegistrationRepository implements EventListener {
     }
 
     @Override
-    public String getTopicName() {
-        return "conference";
+    public TopicName getTopicName() {
+        return CONFERENCE;
     }
 
 }

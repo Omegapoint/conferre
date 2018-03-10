@@ -5,12 +5,15 @@ import org.springframework.stereotype.Service;
 import se.omegapoint.conferre.Identity;
 import se.omegapoint.conferre.event.Event;
 import se.omegapoint.conferre.event.EventBus;
+import se.omegapoint.conferre.event.TopicName;
 import se.omegapoint.conferre.proposal.domain.Proposal;
 import se.omegapoint.conferre.proposal.domain.ProposalRules;
 import se.omegapoint.conferre.proposal.domain.ProposalStore;
 import se.omegapoint.conferre.proposal.event.ProposalTitleUpdated;
 
 import java.util.List;
+
+import static se.omegapoint.conferre.event.TopicName.PROPOSAL;
 
 @Service
 public class ProposalService {
@@ -40,7 +43,7 @@ public class ProposalService {
     }
 
     private Proposal publish(Event event) {
-        eventBus.publish("proposal", event);
+        eventBus.publish(PROPOSAL, event);
         return store.applyEvent(event);
     }
 
