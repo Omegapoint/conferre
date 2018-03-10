@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import se.omegapoint.conferre.conference.domain.Conference;
-import se.omegapoint.conferre.conference.domain.ConferenceRepository;
+import se.omegapoint.conferre.conference.service.ConferenceService;
 
 import java.util.List;
 
@@ -13,18 +13,22 @@ import java.util.List;
 @RequestMapping("/conference")
 public class ConferenceController {
 
+    private ConferenceService conferenceService;
+
     @Autowired
-    private ConferenceRepository conferenceRepository;
+    public ConferenceController(ConferenceService conferenceService) {
+        this.conferenceService = conferenceService;
+    }
 
     @RequestMapping(method = RequestMethod.POST)
     public Conference createConference(Conference conference) {
-        conferenceRepository.createConference(conference);
+        conferenceService.createConference(conference);
         return conference;
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Conference> listRegistrations() {
-        return conferenceRepository.listConferences();
+    public List<Conference> listConferences() {
+        return conferenceService.listConferences();
     }
 
 
