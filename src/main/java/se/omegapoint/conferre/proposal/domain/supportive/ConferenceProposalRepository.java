@@ -1,13 +1,14 @@
-package se.omegapoint.conferre.proposal.domain;
+package se.omegapoint.conferre.proposal.domain.supportive;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import se.omegapoint.conferre.Identity;
-import se.omegapoint.conferre.conference.domain.Conference;
+import se.omegapoint.conferre.conference.event.ConferenceCreated;
 import se.omegapoint.conferre.event.Event;
 import se.omegapoint.conferre.event.EventBus;
 import se.omegapoint.conferre.event.EventListener;
 import se.omegapoint.conferre.event.TopicName;
+import se.omegapoint.conferre.proposal.domain.supportive.Conference;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -37,7 +38,7 @@ public class ConferenceProposalRepository implements EventListener {
 	}
 
     private void applyEvent(Event event) {
-        Conference conference = (Conference) event.getPayload();
+	    Conference conference = new Conference((ConferenceCreated) event.getPayload());
         currentState.add(conference.getId());
     }
 

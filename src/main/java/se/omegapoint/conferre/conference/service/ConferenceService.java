@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import se.omegapoint.conferre.conference.domain.Conference;
 import se.omegapoint.conferre.conference.domain.ConferenceRules;
 import se.omegapoint.conferre.conference.domain.ConferenceStore;
+import se.omegapoint.conferre.conference.event.ConferenceCreated;
 import se.omegapoint.conferre.event.Event;
 import se.omegapoint.conferre.event.EventBus;
 
@@ -27,8 +28,7 @@ public class ConferenceService {
 
 	public synchronized Conference createConference(Conference conference) {
 		rules.validate(store, conference);
-		Event event = new Event("CREATED", conference);
-		return publish(event);
+		return publish(ConferenceCreated.asEvent(conference));
 	}
 
 	private Conference publish(Event event) {
