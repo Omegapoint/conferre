@@ -36,7 +36,7 @@ public class ConferenceRegistrationRepository implements EventListener {
     }
 
     private void applyEvent(Event event) {
-        Conference conference = new Conference((ConferenceCreated) event.getPayload());
+        Conference conference = ConferenceBuilder.aConference(((ConferenceCreated) event.getPayload()).getConferenceId()).build();
         currentState.add(conference.getId());
     }
 

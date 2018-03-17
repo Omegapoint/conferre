@@ -8,7 +8,6 @@ import se.omegapoint.conferre.event.Event;
 import se.omegapoint.conferre.event.EventBus;
 import se.omegapoint.conferre.event.EventListener;
 import se.omegapoint.conferre.event.TopicName;
-import se.omegapoint.conferre.proposal.domain.supportive.Conference;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -37,10 +36,10 @@ public class ConferenceProposalRepository implements EventListener {
 		applyEvent(event);
 	}
 
-    private void applyEvent(Event event) {
-	    Conference conference = new Conference((ConferenceCreated) event.getPayload());
-        currentState.add(conference.getId());
-    }
+	private void applyEvent(Event event) {
+		Conference conference = ConferenceBuilder.aConference(((ConferenceCreated) event.getPayload()).getConferenceId()).build();
+		currentState.add(conference.getId());
+	}
 
 	public boolean exists(Identity conferenceId) {
 		return currentState.contains(conferenceId);

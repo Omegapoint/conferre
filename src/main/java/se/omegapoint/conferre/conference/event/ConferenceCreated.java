@@ -22,8 +22,12 @@ public class ConferenceCreated {
 		return name;
 	}
 
-	public static Event asEvent(Conference conference) {
-		return new Event("CREATED", new ConferenceCreated(conference));
+	public static ConferenceCreated from(Conference conference) {
+		return new ConferenceCreated(conference);
+	}
+
+	public Event asEvent() {
+		return new Event("CREATED", this);
 	}
 
 }

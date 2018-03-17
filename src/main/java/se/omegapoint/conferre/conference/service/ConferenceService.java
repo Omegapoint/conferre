@@ -28,7 +28,7 @@ public class ConferenceService {
 
 	public synchronized Conference createConference(Conference conference) {
 		rules.validate(store, conference);
-		return publish(ConferenceCreated.asEvent(conference));
+		return publish(ConferenceCreated.from(conference).asEvent());
 	}
 
 	private Conference publish(Event event) {
