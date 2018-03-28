@@ -1,6 +1,7 @@
 package se.omegapoint.conferre.registration.domain;
 
 import org.springframework.stereotype.Component;
+import se.omegapoint.conferre.registration.domain.supportive.ConferenceRegistrationRepository;
 
 @Component
 public class RegistrationRules {

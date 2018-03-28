@@ -2,28 +2,32 @@ package se.omegapoint.conferre.conference.domain;
 
 import se.omegapoint.conferre.Entity;
 import se.omegapoint.conferre.Identity;
-import se.omegapoint.conferre.event.Event;
+import se.omegapoint.conferre.conference.event.ConferenceCreated;
 
 public class Conference extends Entity {
 
-    private final String name;
+	private final String name;
 
-    public Conference(String name) {
-        super(Identity.instance());
-        this.name = name;
-    }
+	public Conference(String name) {
+		this(Identity.instance(), name);
+	}
 
-    public String getName() {
-        return name;
-    }
+	private Conference(Identity conferenceId, String name) {
+		super(conferenceId);
+		this.name = name;
+	}
 
-    public Event asCreatedEvent() {
-        return new Event("CREATED", this);
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void requireGood(Conference existing) {
-        if (name.equals(existing.name)) {
-            throw new IllegalStateException("Conflicting conference: " + name);
-        }
-    }
+	void requireGood(Conference existing) {
+		if (name.equals(existing.name)) {
+			throw new IllegalStateException("Conflicting conference: " + name);
+		}
+	}
+
+	static Conference fromEvent(ConferenceCreated conferenceCreated) {
+		return new Conference(conferenceCreated.getConferenceId(), conferenceCreated.getName());
+	}
 }

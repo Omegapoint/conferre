@@ -22,8 +22,7 @@ public class ConferenceController {
 
     @RequestMapping(method = RequestMethod.POST)
     public Conference createConference(Conference conference) {
-        conferenceService.createConference(conference);
-        return conference;
+        return conferenceService.createConference(conference);
     }
 
     @RequestMapping(method = RequestMethod.GET)

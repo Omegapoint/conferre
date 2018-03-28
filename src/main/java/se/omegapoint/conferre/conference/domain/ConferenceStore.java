@@ -2,6 +2,7 @@ package se.omegapoint.conferre.conference.domain;
 
 import org.springframework.stereotype.Component;
 import se.omegapoint.conferre.Identity;
+import se.omegapoint.conferre.conference.event.ConferenceCreated;
 import se.omegapoint.conferre.event.Event;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class ConferenceStore {
 	}
 
 	private Conference created(Event event) {
-		Conference conference = (Conference) event.getPayload();
+		Conference conference = Conference.fromEvent((ConferenceCreated) event.getPayload());
 		store.put(conference.getId(), conference);
 		return conference;
 	}

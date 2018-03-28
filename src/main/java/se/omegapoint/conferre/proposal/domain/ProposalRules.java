@@ -3,6 +3,7 @@ package se.omegapoint.conferre.proposal.domain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import se.omegapoint.conferre.Identity;
+import se.omegapoint.conferre.proposal.domain.supportive.ConferenceProposalRepository;
 
 @Component
 public class ProposalRules {
