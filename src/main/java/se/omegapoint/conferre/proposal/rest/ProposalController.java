@@ -25,7 +25,7 @@ public class ProposalController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Proposal createProposal(Proposal proposal) {
+    public Proposal createProposal(@RequestBody Proposal proposal) {
         return proposalService.createProposal(proposal);
     }
 

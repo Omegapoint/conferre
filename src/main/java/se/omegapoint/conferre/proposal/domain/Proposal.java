@@ -2,25 +2,29 @@ package se.omegapoint.conferre.proposal.domain;
 
 import se.omegapoint.conferre.Entity;
 import se.omegapoint.conferre.Identity;
-import se.omegapoint.conferre.event.Event;
 
 public class Proposal extends Entity {
 
-    private final String title;
-    private final String description;
-    private final String eMail;
-    private final Identity conferenceId;
+    private String title;
+    private String description;
+    private String email;
+    private Identity conferenceId;
 
-    public Proposal(String title, String description, String eMail, Identity conferenceId) {
-        this(Identity.instance(), title, description, eMail, conferenceId);
+    //For Jacksson
+    public Proposal() {
+        super(Identity.instance());
     }
 
-    private Proposal(Identity identity, String title, String description, String eMail, Identity conferenceId) {
+    public Proposal(String title, String description, String email, Identity conferenceId) {
+        this(Identity.instance(), title, description, email, conferenceId);
+    }
+
+    private Proposal(Identity identity, String title, String description, String email, Identity conferenceId) {
         super(identity);
 
         this.title = title;
         this.description = description;
-        this.eMail = eMail;
+        this.email = email;
         this.conferenceId = conferenceId;
     }
 
@@ -32,8 +36,8 @@ public class Proposal extends Entity {
         return description;
     }
 
-    public String geteMail() {
-        return eMail;
+    public String getEmail() {
+        return email;
     }
 
     public Identity getConferenceId() {
@@ -41,7 +45,7 @@ public class Proposal extends Entity {
     }
 
     public void requireGood(Proposal existing) {
-        if (title.equals(existing.title) && eMail.equals(existing.eMail) && conferenceId.equals(existing.conferenceId)) {
+        if (title.equals(existing.title) && email.equals(existing.email) && conferenceId.equals(existing.conferenceId)) {
             throw new IllegalStateException("Duplicate proposal: " + existing);
         }
     }
@@ -62,7 +66,7 @@ public class Proposal extends Entity {
             this.identity = proposal.getId();
             this.title = proposal.title;
             this.description = proposal.description;
-            this.eMail = proposal.eMail;
+            this.eMail = proposal.email;
             this.conferenceId = proposal.conferenceId;
         }
 

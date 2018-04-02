@@ -9,7 +9,10 @@ public class Identity extends ValueObject {
 
     private final UUID uuid;
 
-
+    //For Jacksson
+    public Identity(String uuid) {
+        this(UUID.fromString(uuid));
+    }
 
     private Identity(@NonNull UUID uuid) {
         Objects.requireNonNull(uuid, "Identity uuid can't be null");
