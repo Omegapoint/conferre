@@ -29,31 +29,15 @@
                           label="Description:"
                           label-for="description">
               <b-form-textarea id="description"
-                            type="text"
                             v-model="form.description"
                             required
                             rows="3"
                             max-rows="6"
-                            placeholder="Enter description">
+                            placeholder="Enter a description">
               </b-form-textarea>
             </b-form-group>
-            <b-form-group id="typeGroup"
-                          label="Type:"
-                          label-for="type">
-              <b-form-select id="exampleInput3"
-                             :options="types"
-                             required
-                             v-model="form.type">
-              </b-form-select>
-            </b-form-group>
-            <b-form-group id="exampleGroup4">
-              <b-form-checkbox-group v-model="form.checked" id="exampleChecks">
-                <b-form-checkbox value="me">Check me out</b-form-checkbox>
-                <b-form-checkbox value="that">Check that out</b-form-checkbox>
-              </b-form-checkbox-group>
-            </b-form-group>
             <b-button type="submit" variant="primary">Submit</b-button>
-            <b-button type="reset" variant="danger">Reset</b-button>
+            <b-button type="reset" variant="secondary">Reset</b-button>
           </b-form>
         </b-col>
       </b-row>
@@ -62,44 +46,51 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        form: {
-          email: '',
-          title: '',
-          description: '',
-          type: null,
-          checked: []
-        },
-        types: [
-          {text: 'Select One', value: null},
-          'Presentation (45 min)', 'Lightning talk (15 min)', 'Workshop (180 min)'
-        ],
-        show: true
-      }
-    },
-    methods: {
-      onSubmit(evt) {
-        evt.preventDefault()
-        alert(JSON.stringify(this.form))
+import {AXIOS} from '../http-common';
+export default {
+  data: function () {
+    return {
+      errors: [],
+      form: {
+        email: '',
+        title: '',
+        description: '',
+        conferenceId: 'c89d6dbb-2c2e-4a53-9fb1-7934575b49d1'
       },
-      onReset(evt) {
-        evt.preventDefault()
-        /* Reset our form values */
-        this.form.email = ''
-        this.form.title = ''
-        this.form.description = ''
-        this.form.type = null
-        this.form.checked = []
-        /* Trick to reset/clear native browser form validation state */
-        this.show = false
-        this.$nextTick(() => {
-          this.show = true
-        })
-      }
+      types: [
+        {text: 'Select One', value: null},
+        {text: 'Presentation (45 min)', value: 0},
+        {text: 'Lightning talk (15 min)', value: 1},
+        {text: 'Workshop (180 min)', value: 2}
+      ],
+      show: true
+    };
+  },
+  methods: {
+    onSubmit: function (evt) {
+      evt.preventDefault();
+      console.log(JSON.stringify(this.form));
+      AXIOS.post('http://localhost:8088/proposal', JSON.stringify(this.form))
+        .then(response => {})
+        .catch(e => {
+          this.errors.push(e);
+        });
+    },
+    onReset: function (evt) {
+      evt.preventDefault();
+      /* Reset our form values */
+      this.form.email = '';
+      this.form.title = '';
+      this.form.description = '';
+      this.form.conferenceId = 'c89d6dbb-2c2e-4a53-9fb1-7934575b49d1';
+      /* Trick to reset/clear native browser form validation state */
+      this.show = false;
+      this.$nextTick(() => {
+        this.show = true;
+      });
     }
   }
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

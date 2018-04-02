@@ -29,9 +29,9 @@ export default {
     return {
       proposals: 42,
       speakers: 38
-    }
+    };
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

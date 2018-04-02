@@ -5,18 +5,18 @@
 </template>
 
 <script>
-import MainPanel from './MainPanel.vue'
+import MainPanel from './MainPanel.vue';
 export default {
   name: 'Home',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
-    }
+    };
   },
   components: {
     MainPanel
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
