@@ -55,7 +55,7 @@ export default {
         email: '',
         title: '',
         description: '',
-        conferenceId: 'c89d6dbb-2c2e-4a53-9fb1-7934575b49d1'
+        conferenceId: this.$conferenceId
       },
       types: [
         {text: 'Select One', value: null},
@@ -69,8 +69,7 @@ export default {
   methods: {
     onSubmit: function (evt) {
       evt.preventDefault();
-      console.log(JSON.stringify(this.form));
-      AXIOS.post('http://localhost:8088/proposal', JSON.stringify(this.form))
+      AXIOS.post('proposal', JSON.stringify(this.form))
         .then(response => {})
         .catch(e => {
           this.errors.push(e);

@@ -26,7 +26,15 @@
 
 <script>
 export default {
-  name: 'Header'
+  name: 'Header',
+  data: function () {
+    return {
+      conferenceId: this.$conferenceId
+    };
+  },
+  created: function () {
+    // fetch conference data from server with this.conferenceId
+  }
 };
 </script>
 

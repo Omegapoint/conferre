@@ -10,10 +10,12 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 Vue.config.productionTip = false;
 Vue.use(BootstrapVue);
 
+Vue.prototype.$conferenceId = 'c89d6dbb-2c2e-4a53-9fb1-7934575b49d1';
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
   components: { App },
-  template: '<App/>'
+  template: '<App />'
 });
