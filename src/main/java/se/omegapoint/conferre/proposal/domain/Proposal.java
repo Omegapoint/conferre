@@ -15,68 +15,69 @@ public class Proposal extends Entity {
         super(Identity.instance());
     }
 
-    public Proposal(String title, String description, String email, Identity conferenceId) {
-        this(Identity.instance(), title, description, email, conferenceId);
-    }
+	public Proposal(String title, String description, String email, Identity conferenceId) {
+		this(Identity.instance(), title, description, email, conferenceId);
+	}
 
-    private Proposal(Identity identity, String title, String description, String email, Identity conferenceId) {
-        super(identity);
+	private Proposal(Identity identity, String title, String description, String email, Identity conferenceId) {
+		super(identity);
 
-        this.title = title;
-        this.description = description;
-        this.email = email;
-        this.conferenceId = conferenceId;
-    }
+		this.title = title;
+		this.description = description;
+		this.email = email;
+		this.conferenceId = conferenceId;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public Identity getConferenceId() {
-        return conferenceId;
-    }
+	public Identity getConferenceId() {
+		return conferenceId;
+	}
 
-    public void requireGood(Proposal existing) {
-        if (title.equals(existing.title) && email.equals(existing.email) && conferenceId.equals(existing.conferenceId)) {
-            throw new IllegalStateException("Duplicate proposal: " + existing);
-        }
-    }
+	void requireGood(Proposal existing) {
+		if (title.equals(existing.title) && email.equals(existing.email) && conferenceId.equals(existing
+                .conferenceId)) {
+			throw new IllegalStateException("Duplicate proposal: " + existing);
+		}
+	}
 
-    public static ProposalBuilder from(Proposal proposal) {
-        return new ProposalBuilder(proposal);
-    }
+	public static ProposalBuilder from(Proposal proposal) {
+		return new ProposalBuilder(proposal);
+	}
 
-    static class ProposalBuilder {
+	static class ProposalBuilder {
 
-        private final Identity identity;
-        private String title;
-        private String description;
-        private String eMail;
-        private Identity conferenceId;
+		private final Identity identity;
+		private String title;
+		private String description;
+		private String eMail;
+		private Identity conferenceId;
 
-        public ProposalBuilder(Proposal proposal) {
-            this.identity = proposal.getId();
-            this.title = proposal.title;
-            this.description = proposal.description;
-            this.eMail = proposal.email;
-            this.conferenceId = proposal.conferenceId;
-        }
+		ProposalBuilder(Proposal proposal) {
+			this.identity = proposal.getId();
+			this.title = proposal.title;
+			this.description = proposal.description;
+			this.eMail = proposal.email;
+			this.conferenceId = proposal.conferenceId;
+		}
 
-        public ProposalBuilder withTitle(String title) {
-            this.title = title;
-            return this;
-        }
+		ProposalBuilder withTitle(String title) {
+			this.title = title;
+			return this;
+		}
 
-        public Proposal build() {
-            return new Proposal(identity, title, description, eMail, conferenceId);
-        }
-    }
+		public Proposal build() {
+			return new Proposal(identity, title, description, eMail, conferenceId);
+		}
+	}
 }
